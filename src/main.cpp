@@ -1,9 +1,12 @@
-
+/*
+ * Electrocard. - An OLED powered business card. 
+ *
+ * Designed an programmed by Michael Teeuw
+ * For more info, check: http://michaelteeuw.nl/tagged/electrocard
+ *
+ */
 
 #include <Arduino.h>
-
-// #include <stdio.h>
-// #include <avr/io.h>
 #include <util/delay.h>
 
 #include "TinyOLED.h"
