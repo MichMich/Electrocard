@@ -1,5 +1,5 @@
 /*
- * Electrocard. - An OLED powered business card. 
+ * Electrocard. - An OLED powered business card.
  *
  * Designed an programmed by Michael Teeuw
  * For more info, check: http://michaelteeuw.nl/tagged/electrocard
@@ -33,7 +33,7 @@ ClickButton buttons[3] = {
 
 void setup()
 {
-  _delay_ms(1000);
+  _delay_ms(100);
 
   // pinMode(0, INPUT_PULLUP);
   // pinMode(1, INPUT_PULLUP);
@@ -90,9 +90,13 @@ void loop()
   }
 
   if (buttons[2].clicks < 0) {
-    //Pretend we go off, and what till the button is released.
+    //Pretend we go off by clearing the display.
     TinyOLED.clear();
-    while (!(PINB & (1 << 2))) {}
+
+    // Wait till the button is released.
+    while (!(PINB & (1 << 2))) {
+      _delay_ms(100);
+    }
 
     //Good to go! Go to sleep.
     sleep();

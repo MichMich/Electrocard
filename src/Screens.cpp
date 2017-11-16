@@ -1,5 +1,5 @@
 /*
- * Electrocard. - An OLED powered business card. 
+ * Electrocard. - An OLED powered business card.
  *
  * Designed an programmed by Michael Teeuw
  * For more info, check: http://michaelteeuw.nl/tagged/electrocard
@@ -20,7 +20,7 @@ void Screens::systemInfo()
   TinyOLED.output_string(__TIME__);
 
   TinyOLED.setpos(0, 1);
-  TinyOLED.output_string("HW: Electrocard v0.1\n");
+  TinyOLED.output_string("HW: Electrocard v0.2\n");
 
   char battery[10];
   sprintf(battery, "%lu", System.readVcc());
