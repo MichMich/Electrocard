@@ -93,9 +93,13 @@ void loop()
     //Pretend we go off by clearing the display.
     TinyOLED.clear();
 
-    // Wait till the button is released.
-    while (!(PINB & (1 << 2))) {
-      _delay_ms(100);
+    // Debounce: wait until the button is released for approx 250ms.
+    unsigned char debounce = 0;
+    while (debounce < 250) {
+      debounce++;
+      for (int i = 0; i < 2500; i++) {
+        if (!(PINB & (1 << 2))) debounce = 0;
+      }
     }
 
     //Good to go! Go to sleep.
