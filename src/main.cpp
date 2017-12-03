@@ -18,7 +18,7 @@
 #include "Screens.h"
 
 #define STANDBY_TIME 30000
-#define STANDBY_TIME_LONG 120000
+#define STANDBY_TIME_LONG 60000
 
 typedef enum {SCREENS, TETRIS, SYSTEM_INFO} mode_type;
 mode_type mode = SCREENS;
@@ -51,6 +51,7 @@ void setup()
   }
 
   // Begin with start image
+  mode = SCREENS;
   Screens.showScreen(2);
 }
 
@@ -80,6 +81,8 @@ void loop()
   }
 
   if (buttons[0].clicks < 0 && (mode != TETRIS || tetris.gameOver)) {
+    // Set the longpress for button 2 longer to prevent accidental exiting.
+    buttons[2].longClickTime  = 2000;
     tetris.start();
     mode = TETRIS;
   }
@@ -89,21 +92,34 @@ void loop()
     mode = SYSTEM_INFO;
   }
 
-  if (buttons[2].clicks < 0) {
+  // If we aren't running Tetris, and button 2 is long pressed, go to virtual standby mode.
+  if (buttons[2].clicks < 0 && (mode != TETRIS || tetris.gameOver)) {
     //Pretend we go off by clearing the display.
+    mode = SCREENS;
     TinyOLED.clear();
 
-    // Debounce: wait until the button is released for approx 250ms.
-    unsigned char debounce = 0;
-    while (debounce < 250) {
-      debounce++;
-      for (int i = 0; i < 2500; i++) {
-        if (!(PINB & (1 << 2))) debounce = 0;
-      }
-    }
+    /**
+     * Let's just pretend we go to sleep, and let the auto power-off do the rest.
+     * This way we won't get any interference from the button being pressed when going to sleep.
+     * *
 
-    //Good to go! Go to sleep.
-    sleep();
+      // Debounce: wait until the button is released for approx 250ms.
+      unsigned char debounce = 0;
+      while (debounce < 250) {
+        debounce++;
+        for (int i = 0; i < 2500; i++) {
+          if (!(PINB & (1 << 2))) debounce = 0;
+        }
+      }
+
+      //Good to go! Go to sleep.
+      sleep();
+    */
+  }
+
+  // If we ARE running Tetris, and button 2 is long pressed, exit the game by running startup again.
+  if (buttons[2].clicks < 0 && !(mode != TETRIS || tetris.gameOver)) {
+    setup();
   }
 
   switch (mode) {
