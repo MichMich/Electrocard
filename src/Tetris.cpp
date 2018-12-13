@@ -1,11 +1,11 @@
 /*
- * Electrocard. - An OLED powered business card. 
+ * Electrocard. - An OLED powered business card.
  *
  * Designed an programmed by Michael Teeuw
  * For more info, check: http://michaelteeuw.nl/tagged/electrocard
  *
  */
- 
+
 #include "Tetris.h"
 #include "TinyOLED.h"
 #include <stdlib.h>
@@ -168,7 +168,7 @@ void Tetris::mergeMatrix()
 void Tetris::setRandomPlayerMatrix()
 {
   // Should this be moved to progmem?
-  const unsigned int matrices[7] = {
+  const int matrices[7] = {
     0b00010001 << 8 | 0b00010001, // I
     0b00000001 << 8 | 0b00010011, // J
     0b00001000 << 8 | 0b10001100, // L
