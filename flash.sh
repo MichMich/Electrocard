@@ -10,6 +10,6 @@ avrdude -c usbasp -p t85 -u -U lfuse:w:0xE2:m -U hfuse:w:0xDF:m -U efuse:w:0xFF:
 echo "\n\n${GREEN}Fuses set!${NC}\n\n"
 
 #Burn Firmware
-avrdude -c usbasp -p t85 -u -U flash:w:./.pioenvs/attiny85/firmware.hex || (echo "${RED}Failed to burn firmware!${NC}\n\n"; exit 1);
+avrdude -c usbasp -p t85 -u -U flash:w:./.pio/build/attiny85/firmware.hex || (echo "${RED}Failed to burn firmware!${NC}\n\n"; exit 1);
 
 echo "\n\n${GREEN}Electrocard flashed!${NC}\n\n"
